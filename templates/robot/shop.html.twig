@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Robot Shop
+{% endblock %}
+
+{% block body %}
+	<h1>Robot Shop</h1>
+    <div class="nav">
+
+        <a href="../login"><button>Connexion</button></a>
+        
+        <button>Panier</button>
+    </div>
+
+	<div class="container">
+		{% for robot in robots %}
+			<div class="card">
+				<a href="{{ path('app_robot_show', {'id': robot.id}) }}" class="card-link">
+					<img src="{{ asset('images/' ~ robot.image ~ '.png') }}" alt="Image de {{ robot.name }}">
+					<h2>{{ robot.name }}</h2>
+					<p>{{ robot.description }}</p>
+					<div class="flex">
+						<p class="price">Prix :
+							{{ robot.price }}
+							€</p>
+						<p>Catégorie :
+							<strong>{{ robot.category.name }}</strong>
+						</p>
+					</div>
+						<a href="#" class="btn">Acheter</a>
+				</div>
+			</a>
+		{% else %}
+			<p>Aucun robot disponible pour le moment.</p>
+		{% endfor %}
+	</div>
+
+	<div class="pagination">
+		{% if page > 1 %}
+			<a href="{{ path('robot_shop', {page: page - 1}) }}" class="btn">Précédent</a>
+		{% else %}
+			<a href="#" class="btn disabled">Précédent</a>
+		{% endif %}
+
+
+		{% for i in 1..maxPage %}
+			<a href="{{ path('robot_shop', {page: i}) }}" class="{{ i == page ? 'btn active' : 'btn' }}">
+				{{ i }}
+			</a>
+		{% endfor %}
+
+		{% if page < maxPage %}
+			<a href="{{ path('robot_shop', {page: page + 1}) }}" class="btn">Suivant</a>
+		{% else %}
+			<a href="#" class="btn disabled">Suivant</a>
+		{% endif %}
+	</div>
+{% endblock %}
+

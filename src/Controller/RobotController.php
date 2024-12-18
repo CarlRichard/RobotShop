@@ -42,6 +42,27 @@ final class RobotController extends AbstractController
         ]);
     }
 
+    #[Route('/shop', name: 'robot_shop')]
+    public function shop(Request $request, RobotRepository $robotRepository): Response
+    {
+        // Récupération de la page dans l'URL ou défaut à la première page
+        $page = $request->query->getInt('page', 1);
+    
+        // Pagination des robots
+        $robots = $robotRepository->paginate($request); 
+    
+        // Calcul du nombre total de pages (9 robots par page)
+        $totalRobots = $robotRepository->count([]);
+        $maxPage = ceil($totalRobots / 9); 
+    
+        return $this->render('robot/shop.html.twig', [
+            'robots' => $robots,
+            'maxPage' => $maxPage,
+            'page' => $page
+        ]);
+    }
+    
+
     #[Route('/{id}', name: 'app_robot_show', methods: ['GET'])]
     public function show(Robot $robot): Response
     {
@@ -78,4 +99,5 @@ final class RobotController extends AbstractController
 
         return $this->redirectToRoute('app_robot_index', [], Response::HTTP_SEE_OTHER);
     }
+    
 }

@@ -1,0 +1,164 @@
+/* Global settings */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 2.5rem;
+    color: #444;
+}
+
+/* Main container for the cards */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Styling for each card */
+.card {
+    background: #dcdcdc;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(33.333% - 20px); 
+    text-align: center;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Image styling */
+.card img {
+    width: 100%;
+    height: 180px; 
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Title styling */
+.card h2 {
+    font-size: 1.3rem;
+    margin: 10px 0;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Description and details */
+.card p {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 10px 15px;
+    text-align: left;
+}
+
+/* Price and button */
+.card .price {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #e44d26;
+    margin: 10px 0;
+}
+
+.card .btn {
+    display: inline-block;
+    background-color: #4caf50;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+.flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.card .btn:hover {
+    background-color: #45a049;
+}
+
+/* Ensure the link wraps the whole card correctly */
+.card-link {
+    display: block;
+    text-decoration: none; /* Remove default link underline */
+    color: inherit; /* Inherit the text color from the card */
+}
+
+/* Pagination container */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+/* Style des boutons de pagination */
+.pagination .btn {
+    display: inline-block;
+    background-color: #4caf50;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+/* Style pour la page active */
+.pagination .active {
+    background-color: #e44d26; 
+    color: white;
+    font-weight: bold;
+}
+
+/* Désactivation des boutons Précédent/Suivant */
+.pagination .disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+.nav {
+    display: flex;
+    justify-content: end;
+    gap: 30px;
+    margin-right: 50px;
+    
+
+}
+
+.nav button {
+    display: inline-block;
+    background-color: #4caf50;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+h1 {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
