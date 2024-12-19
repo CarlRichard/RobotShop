@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/cart/item')]
+#[Route('/cartitem')]
 final class CartItemController extends AbstractController
 {
     #[Route(name: 'app_cart_item_index', methods: ['GET'])]
@@ -22,7 +22,7 @@ final class CartItemController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_cart_item_new', methods: ['GET', 'POST'])]
+    #[Route('/cartitem/new', name: 'app_cart_item_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $cartItem = new CartItem();
@@ -42,7 +42,7 @@ final class CartItemController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_cart_item_show', methods: ['GET'])]
+    #[Route('/cartitem/{id}', name: 'app_cart_item_show', methods: ['GET'])]
     public function show(CartItem $cartItem): Response
     {
         return $this->render('cart_item/show.html.twig', [
@@ -50,7 +50,7 @@ final class CartItemController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_cart_item_edit', methods: ['GET', 'POST'])]
+    #[Route('/cartitem/{id}/edit', name: 'app_cart_item_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, CartItem $cartItem, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(CartItemType::class, $cartItem);
@@ -68,7 +68,7 @@ final class CartItemController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_cart_item_delete', methods: ['POST'])]
+    #[Route('/cartitem/{id}', name: 'app_cart_item_delete', methods: ['POST'])]
     public function delete(Request $request, CartItem $cartItem, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$cartItem->getId(), $request->getPayload()->getString('_token'))) {

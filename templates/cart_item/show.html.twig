@@ -4,6 +4,7 @@
 
 {% block body %}
     <h1>CartItem</h1>
+<a href="{{ path('app_cart_item_show', { 'cartId': cart.id, 'itemId': cartItem.id }) }}">Voir cet élément</a>
 
     <table class="table">
         <tbody>

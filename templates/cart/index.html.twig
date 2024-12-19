@@ -1,33 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Cart index{% endblock %}
+{% block title %}Mon Panier{% endblock %}
 
 {% block body %}
-    <h1>Cart index</h1>
-
-    <table class="table">
+    <h1>Mon Panier</h1>
+    <table>
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>actions</th>
-            </tr>
+            <th>Robot</th>
+            <th>prix</th>
+            <th>Quantité</th>
+            <th>Total</th>
+            <th>Action</th>
         </thead>
         <tbody>
-        {% for cart in carts %}
-            <tr>
-                <td>{{ cart.id }}</td>
+            {% for element in data %}
+                <td>{{ element.robot.name }}</td>
+                <td>{{ element.robot.price }} €</td>
+                <td>{{ element.quantity }}</td>
+                <td>{{ element.quantity * element.robot.price }} €</td>
                 <td>
-                    <a href="{{ path('app_cart_show', {'id': cart.id}) }}">show</a>
-                    <a href="{{ path('app_cart_edit', {'id': cart.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
+                    <a href='{{path('cart_add', {id: element.robot.id })}}'><button>+</button></a>
+                    <a href='{{path('cart_remove', {id: element.robot.id })}}'><button>-</button></a>
+                    <a href='{{path('cart_delete', {id: element.robot.id }) }}'><button>Supprimer</button></a>
+                </td> 
+            {% else %}
             <tr>
-                <td colspan="2">no records found</td>
+                <td colspan="5">Votre panier est vide </td>
             </tr>
-        {% endfor %}
+            <tfoot>
+                <tr>
+                <td colspan="3">Total </td>
+                <td> {{total}} € </td>
+                <td> </td>
+                </tr>
+            </tfoot>
+
+            {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_cart_new') }}">Create new</a>
+
+        
+
 {% endblock %}

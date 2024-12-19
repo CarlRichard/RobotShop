@@ -9,7 +9,7 @@
 
         <a href="../login"><button>Connexion</button></a>
         
-        <button>Panier</button>
+        <a href=""><button>Panier</button></a>
     </div>
 
 	<div class="container">
@@ -27,7 +27,7 @@
 							<strong>{{ robot.category.name }}</strong>
 						</p>
 					</div>
-						<a href="#" class="btn">Acheter</a>
+						<a href="{{ path ('cart_add', {id: robot.id }) }}" class="btn">Acheter</a>
 				</div>
 			</a>
 		{% else %}

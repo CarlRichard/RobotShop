@@ -5,6 +5,19 @@
 {% block body %}
     <h1>CartItem index</h1>
 
+
+
+{% block body %}
+    <h1>Détails de l'Élément du Panier</h1>
+
+    <p>Nom du produit : {{ cartItem.robot.name }}</p>
+    <p>Quantité : {{ cartItem.quantity }}</p>
+    <p>Prix : {{ cartItem.robot.price }}</p>
+
+    <a href="{{ path('app_cart_edit_item', { 'cartId': 1, 'itemId': cartItem.id }) }}">Modifier l'élément</a>
+{% endblock %}
+{# 
+
     <table class="table">
         <thead>
             <tr>
@@ -32,4 +45,4 @@
     </table>
 
     <a href="{{ path('app_cart_item_new') }}">Create new</a>
-{% endblock %}
+{% endblock %} #}
