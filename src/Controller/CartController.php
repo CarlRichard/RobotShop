@@ -53,7 +53,6 @@ final class CartController extends AbstractController
             $robot = $robotRepository->find($id);
     
             if (!$robot) {
-                // Si le robot n'existe pas, vous pouvez le retirer du panier
                 unset($panier[$id]);
                 $session->set('panier', $panier);
                 continue; // Passer à l'article suivant
@@ -97,14 +96,18 @@ final class CartController extends AbstractController
     {
         $id = $robot->getId();
         $panier = $session->get('panier', []);
-
-        if (empty($panier[$id])) {
+    
+        // Supprimer uniquement l'article associé à l'ID
+        if (isset($panier[$id])) {
             unset($panier[$id]);
         }
-        $session->set('panier', []);
-
+    
+        // Mettre à jour la session avec le panier modifié
+        $session->set('panier', $panier);
+    
         return $this->redirectToRoute('cart_index');
     }
+    
 
 
     // #[Route('/new', name: 'app_cart_new', methods: ['GET', 'POST'])]

@@ -9,7 +9,11 @@
 
         <a href="../login"><button>Connexion</button></a>
         
-        <a href=""><button>Panier</button></a>
+        {# <a href="../cart"><button>Panier</button></a> #}
+		<a href="{{ path('cart_index') }}" class="btn-cart {% if app.session.get('panier')|length > 0 %}btn-cart-full{% endif %}">
+    🛒 Panier
+</a>
+
     </div>
 
 	<div class="container">
@@ -57,3 +61,15 @@
 	</div>
 {% endblock %}
 
+{% block javascripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const panierButton = document.querySelector('.btn-cart');
+            const panier = {{ app.session.get('panier')|json_encode|raw }} || {};
+
+            if (Object.keys(panier).length > 0) {
+                panierButton.classList.add('btn-cart-full');
+            }
+        });
+    </script>
+{% endblock %}
