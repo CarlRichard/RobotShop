@@ -1,45 +1,44 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Mon Panier{% endblock %}
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/cart.css') }}">
+{% endblock %}
 
 {% block body %}
     <h1>Mon Panier</h1>
     <table>
         <thead>
-            <th>Robot</th>
-            <th>prix</th>
-            <th>Quantité</th>
-            <th>Total</th>
-            <th>Action</th>
+            <tr>
+                <th>Robot</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
         </thead>
         <tbody>
             {% for element in data %}
-                <td>{{ element.robot.name }}</td>
-                <td>{{ element.robot.price }} €</td>
-                <td>{{ element.quantity }}</td>
-                <td>{{ element.quantity * element.robot.price }} €</td>
-                <td>
-                    <a href='{{path('cart_add', {id: element.robot.id })}}'><button>+</button></a>
-                    <a href='{{path('cart_remove', {id: element.robot.id })}}'><button>-</button></a>
-                    <a href='{{path('cart_delete', {id: element.robot.id }) }}'><button>Supprimer</button></a>
-                </td> 
-            {% else %}
-            <tr>
-                <td colspan="5">Votre panier est vide </td>
-            </tr>
-            <tfoot>
                 <tr>
-                <td colspan="3">Total </td>
-                <td> {{total}} € </td>
-                <td> </td>
+                    <td>{{ element.robot.name }}</td>
+                    <td>{{ element.robot.price }} €</td>
+                    <td>{{ element.quantity }}</td>
+                    <td>{{ element.quantity * element.robot.price }} €</td>
+                    <td>
+                        <a href="{{ path('cart_add', {id: element.robot.id}) }}"><button>+</button></a>
+                        <a href="{{ path('cart_remove', {id: element.robot.id}) }}"><button>-</button></a>
+                        <a href="{{ path('cart_delete', {id: element.robot.id}) }}"><button>Supprimer</button></a>
+                    </td>
                 </tr>
-            </tfoot>
-
+            {% else %}
+                <tr>
+                    <td colspan="5">Votre panier est vide</td>
+                </tr>
             {% endfor %}
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">Total</td>
+                <td>{{ total }} €</td>
+                <td></td>
+            </tr>
+        </tfoot>
     </table>
-
-
-        
-
 {% endblock %}

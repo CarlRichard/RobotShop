@@ -44,23 +44,31 @@ final class CartController extends AbstractController
     public function index(SessionInterface $session, RobotRepository $robotRepository): Response
     {
         $panier = $session->get('panier', []);
-
+    
         //init variable
         $data = [];
         $total = 0;
-
+    
         foreach ($panier as $id => $quantity) {
             $robot = $robotRepository->find($id);
+    
+            if (!$robot) {
+                // Si le robot n'existe pas, vous pouvez le retirer du panier
+                unset($panier[$id]);
+                $session->set('panier', $panier);
+                continue; // Passer à l'article suivant
+            }
+    
             $data[] = [
                 'robot' => $robot,
-                'quantity' => $quantity
+                'quantity' => $quantity,
             ];
             $total += $robot->getPrice() * $quantity;
-            //dump($data);
         }
-
+    
         return $this->render('cart/index.html.twig', compact('data', 'total'));
     }
+    
 
     #[Route('/remove/{id}', name: 'cart_remove')]
     public function remove(Robot $robot, SessionInterface $session): Response
