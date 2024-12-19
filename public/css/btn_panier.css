@@ -1,36 +1,21 @@
-/* Style pour le bouton Panier */
+/* btn_panier.css */
 .btn-cart {
-    position: relative;
-    display: inline-block;
+    font-size: 1.5em;
     padding: 10px 20px;
-    background-color: #4CAF50; /* Vert (si panier non vide) */
     color: white;
+    background-color: #ff6600;
     text-decoration: none;
     border-radius: 5px;
-    font-weight: bold;
 }
 
 .btn-cart-full {
-    background-color: #28a745; /* Couleur verte plus intense (si panier non vide) */
+    background-color: #119b0cb7;  /* Couleur différente quand le panier n'est pas vide */
 }
 
-/* Style pour le compteur */
-.panier-count {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    width: 25px;
-    height: 25px;
-    background-color: blue; /* Cercle bleu */
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 25px; /* Centrer le texte */
-    display: none; /* Cacher si le panier est vide */
+.btn-cart:hover {
+    background-color: #e65c00;
 }
 
-.btn-cart-full .panier-count {
-    display: inline-block; /* Afficher le compteur si le panier n'est pas vide */
+.btn-cart-full:hover {
+    background-color: #119b0cb7;
 }

@@ -17,34 +17,30 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/cart')]
 final class CartController extends AbstractController
 {
-
-
     #[Route('/add/{id}', name: 'cart_add')]
-    public function add(Robot $robot, SessionInterface $session): Response
+    public function add(Robot $robot, SessionInterface $session, Request $request): Response
     {
-
         $id = $robot->getId();
         $panier = $session->get('panier', []);
-    
-        // Ajout  ou +1
+        
         if (isset($panier[$id])) {
             $panier[$id]++;
         } else {
             $panier[$id] = 1;
         }
     
-        // MàJ
         $session->set('panier', $panier);
+        $this->addFlash('success', 'Produit ajouté au panier !');
     
-        return $this->redirectToRoute('cart_index');
+        return $this->redirectToRoute('robot_shop');
     }
+    
     
 
     #[Route(name: 'cart_index', methods: ['GET'])]
     public function index(SessionInterface $session, RobotRepository $robotRepository): Response
     {
         $panier = $session->get('panier', []);
-    
         //init variable
         $data = [];
         $total = 0;
@@ -55,7 +51,7 @@ final class CartController extends AbstractController
             if (!$robot) {
                 unset($panier[$id]);
                 $session->set('panier', $panier);
-                continue; // Passer à l'article suivant
+                continue; 
             }
     
             $data[] = [

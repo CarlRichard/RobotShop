@@ -1,75 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Robot Shop
-{% endblock %}
-
 {% block body %}
-	<h1>Robot Shop</h1>
+    <h1>Robot Shop</h1>
+
+    <!-- Affichage du bouton Panier en permanence -->
     <div class="nav">
-
-        <a href="../login"><button>Connexion</button></a>
-        
-        {# <a href="../cart"><button>Panier</button></a> #}
-		<a href="{{ path('cart_index') }}" class="btn-cart {% if app.session.get('panier')|length > 0 %}btn-cart-full{% endif %}">
-    🛒 Panier
-</a>
-
+        <a href="{{ path('cart_index') }}" class="btn-cart {% if app.session.get('panier')|length > 0 %}btn-cart-full{% endif %}">
+            🛒 Panier ({{ app.session.get('panier')|length }})
+        </a>
     </div>
 
-	<div class="container">
-		{% for robot in robots %}
-			<div class="card">
-				<a href="{{ path('app_robot_show', {'id': robot.id}) }}" class="card-link">
-					<img src="{{ asset('images/' ~ robot.image ~ '.png') }}" alt="Image de {{ robot.name }}">
-					<h2>{{ robot.name }}</h2>
-					<p>{{ robot.description }}</p>
-					<div class="flex">
-						<p class="price">Prix :
-							{{ robot.price }}
-							€</p>
-						<p>Catégorie :
-							<strong>{{ robot.category.name }}</strong>
-						</p>
-					</div>
-						<a href="{{ path ('cart_add', {id: robot.id }) }}" class="btn">Acheter</a>
-				</div>
-			</a>
-		{% else %}
-			<p>Aucun robot disponible pour le moment.</p>
-		{% endfor %}
-	</div>
+    <div class="container">
+        {% for robot in robots %}
+            <div class="card">
+                <a href="{{ path('app_robot_show', {'id': robot.id}) }}" class="card-link">
+                    <img src="{{ asset('images/' ~ robot.image ~ '.png') }}" alt="Image de {{ robot.name }}">
+                    <h2>{{ robot.name }}</h2>
+                    <p>{{ robot.description }}</p>
+                    <div class="flex">
+                        <p class="price">Prix : {{ robot.price }} €</p>
+                        <p>Catégorie : <strong>{{ robot.category.name }}</strong></p>
+                    </div>
 
-	<div class="pagination">
-		{% if page > 1 %}
-			<a href="{{ path('robot_shop', {page: page - 1}) }}" class="btn">Précédent</a>
-		{% else %}
-			<a href="#" class="btn disabled">Précédent</a>
-		{% endif %}
+                    {# Formulaire pour ajouter un produit au panier #}
+                    <form action="{{ path('cart_add', {'id': robot.id}) }}" method="post">
+                        <button type="submit" class="btn">Acheter</button>
+                    </form>
+                </a>
+            </div>
+        {% else %}
+            <p>Aucun robot disponible pour le moment.</p>
+        {% endfor %}
+    </div>
 
+    <div class="pagination">
+        {% if page > 1 %}
+            <a href="{{ path('robot_shop', {page: page - 1}) }}" class="btn">Précédent</a>
+        {% else %}
+            <a href="#" class="btn disabled">Précédent</a>
+        {% endif %}
 
-		{% for i in 1..maxPage %}
-			<a href="{{ path('robot_shop', {page: i}) }}" class="{{ i == page ? 'btn active' : 'btn' }}">
-				{{ i }}
-			</a>
-		{% endfor %}
+        {% for i in 1..maxPage %}
+            <a href="{{ path('robot_shop', {page: i}) }}" class="{{ i == page ? 'btn active' : 'btn' }}">
+                {{ i }}
+            </a>
+        {% endfor %}
 
-		{% if page < maxPage %}
-			<a href="{{ path('robot_shop', {page: page + 1}) }}" class="btn">Suivant</a>
-		{% else %}
-			<a href="#" class="btn disabled">Suivant</a>
-		{% endif %}
-	</div>
-{% endblock %}
-
-{% block javascripts %}
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const panierButton = document.querySelector('.btn-cart');
-            const panier = {{ app.session.get('panier')|json_encode|raw }} || {};
-
-            if (Object.keys(panier).length > 0) {
-                panierButton.classList.add('btn-cart-full');
-            }
-        });
-    </script>
+        {% if page < maxPage %}
+            <a href="{{ path('robot_shop', {page: page + 1}) }}" class="btn">Suivant</a>
+        {% else %}
+            <a href="#" class="btn disabled">Suivant</a>
+        {% endif %}
+    </div>
 {% endblock %}
