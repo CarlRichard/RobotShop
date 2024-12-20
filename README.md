@@ -6,7 +6,8 @@
 - Btn de cart " continuer mes achats" 
 - btn panier dynamique
 
-## En cours:
-- Login non fonctionnelle
 
-## A venir 
+## A corriger
+- Message flash 'ajout panier' ( car actuellement ajout au panier redirige vers le panier direct , si je redirige sur la boutique , c'ets le bouton + du panier qui sort du panier )
+
+- Login non fonctionnelle

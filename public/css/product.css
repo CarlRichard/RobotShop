@@ -40,3 +40,54 @@ a {
 a:hover {
     background-color: #45a049;
 }
+
+
+
+/* Bouton Acheter */
+.styled-button {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.styled-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.styled-button:active {
+    background-color: #3e8e41;
+    transform: scale(0.98);
+}
+
+
+/* Conteneur pour centrer les boutons */
+.button-container {
+    display: flex;
+    justify-content: center; /* Centre les boutons horizontalement */
+    gap: 15px; /* Espacement entre les boutons */
+    margin-top: 20px; /* Ajoute un peu d'espace au-dessus */
+}
+
+/* Assurez-vous que les boutons sont uniformes */
+.button-container .btn {
+    text-align: center;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.button-container .btn:hover {
+    background-color: #45a049;
+}

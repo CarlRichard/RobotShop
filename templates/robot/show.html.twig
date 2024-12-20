@@ -5,8 +5,9 @@
 {% endblock %}
 
 {% block stylesheets %}
-	<link rel="stylesheet" href="{{ asset('css/product.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/product.css') }}">
 {% endblock %}
+
 
 {% block body %}
 	<h1>{{ robot.name }}</h1>
@@ -27,7 +28,8 @@
 			</tr>
 			<tr>
 				<th>Prix</th>
-				<td>{{ robot.price }} €</td>
+				<td>{{ robot.price }}
+					€</td>
 			</tr>
 			<tr>
 				<th>Photo</th>
@@ -43,10 +45,13 @@
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_robot_index') }}">back to list</a>
+	<div class="button-container">
+		<a href="{{ path('robot_shop') }}" class="btn">Retour</a>
+		<form action="{{ path('cart_add', {'id': robot.id}) }}" method="post" style="display: inline;">
+			<button type="submit" class="btn styled-button">Acheter</button>
+		</form>
+	</div>
 
-	<a href="{{ path('app_robot_edit', {'id': robot.id}) }}">edit</a>
 
-	{{ include('robot/_delete_form.html.twig') }}
 {% endblock %}
 
