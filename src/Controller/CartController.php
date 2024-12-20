@@ -32,7 +32,7 @@ final class CartController extends AbstractController
         $session->set('panier', $panier);
         $this->addFlash('success', 'Produit ajouté au panier !');
     
-        return $this->redirectToRoute('robot_shop');
+        return $this->redirectToRoute('cart_index');
     }
     
     
