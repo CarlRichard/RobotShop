@@ -12,6 +12,47 @@ h1 {
     margin: 20px 0;
     font-size: 2.5rem;
     color: #444;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Filter container */
+.filter-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    gap: 20px;
+}
+
+/* Filter select box */
+.filter-container select {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+}
+
+.filter-container select:focus {
+    outline: none;
+    border-color: #4caf50; /* Green color on focus */
+}
+
+/* Filter submit button */
+.filter-container button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filter-container button:hover {
+    background-color: #45a049;
 }
 
 /* Main container for the cards */
@@ -143,8 +184,6 @@ h1 {
     justify-content: end;
     gap: 30px;
     margin-right: 50px;
-    
-
 }
 
 .nav button {

@@ -3,13 +3,29 @@
 {% block body %}
     <h1>Robot Shop</h1>
 
-    <!-- Affichage du bouton Panier en permanence -->
+
     <div class="nav">
         <a href="{{ path('cart_index') }}" class="btn-cart {% if app.session.get('panier')|length > 0 %}btn-cart-full{% endif %}">
             🛒 Panier ({{ app.session.get('panier')|length }})
         </a>
     </div>
 
+    <!-- Filtre de catégorie -->
+    <div class="filter-container">
+        <form method="get" action="{{ path('robot_shop') }}">
+            <select name="category_id">
+                <option value="0" {% if category_id == 0 %}selected{% endif %}>Toutes les catégories</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if category.id == category_id %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit">Filtrer</button>
+        </form>
+    </div>
+
+    <!-- Affichage des robots -->
     <div class="container">
         {% for robot in robots %}
             <div class="card">
@@ -21,8 +37,6 @@
                         <p class="price">Prix : {{ robot.price }} €</p>
                         <p>Catégorie : <strong>{{ robot.category.name }}</strong></p>
                     </div>
-
-                    {# Formulaire pour ajouter un produit au panier #}
                     <form action="{{ path('cart_add', {'id': robot.id}) }}" method="post">
                         <button type="submit" class="btn">Acheter</button>
                     </form>
@@ -35,19 +49,19 @@
 
     <div class="pagination">
         {% if page > 1 %}
-            <a href="{{ path('robot_shop', {page: page - 1}) }}" class="btn">Précédent</a>
+            <a href="{{ path('robot_shop', {page: page - 1, category_id: category_id}) }}" class="btn">Précédent</a>
         {% else %}
             <a href="#" class="btn disabled">Précédent</a>
         {% endif %}
 
         {% for i in 1..maxPage %}
-            <a href="{{ path('robot_shop', {page: i}) }}" class="{{ i == page ? 'btn active' : 'btn' }}">
+            <a href="{{ path('robot_shop', {page: i, category_id: category_id}) }}" class="{{ i == page ? 'btn active' : 'btn' }}">
                 {{ i }}
             </a>
         {% endfor %}
 
         {% if page < maxPage %}
-            <a href="{{ path('robot_shop', {page: page + 1}) }}" class="btn">Suivant</a>
+            <a href="{{ path('robot_shop', {page: page + 1, category_id: category_id}) }}" class="btn">Suivant</a>
         {% else %}
             <a href="#" class="btn disabled">Suivant</a>
         {% endif %}

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Robot;
 use App\Form\RobotType;
+use App\Repository\CategoryRepository;
 use App\Repository\RobotRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,24 +44,40 @@ final class RobotController extends AbstractController
     }
 
     #[Route('/shop', name: 'robot_shop')]
-    public function shop(Request $request, RobotRepository $robotRepository): Response
+    public function shop(Request $request, RobotRepository $robotRepository, CategoryRepository $categoryRepository): Response
     {
         // Récupération de la page dans l'URL ou défaut à la première page
         $page = $request->query->getInt('page', 1);
+        
+        // Récupérer le filtre de catégorie depuis l'URL
+        $categoryId = $request->query->getInt('category_id', 0);  // Si pas de catégorie spécifiée, utiliser 0
+        
+        // Récupérer toutes les catégories
+        $categories = $categoryRepository->findAll();
     
-        // Pagination des robots
-        $robots = $robotRepository->paginate($request); 
+        // Si une catégorie est sélectionnée et valide, récupérer les robots filtrés
+        if ($categoryId > 0) {
+            // Filtrer par catégorie
+            $robots = $robotRepository->findByCategory($categoryId);
+        } else {
+            // Récupérer tous les robots (si pas de filtre ou catégorie invalide)
+            $robots = $robotRepository->paginate($request);
+        }
     
-        // Calcul du nombre total de pages (9 robots par page)
-        $totalRobots = $robotRepository->count([]);
+        // Pagination des robots (9 robots par page)
+        $totalRobots = count($robots); // Total des robots après filtre
         $maxPage = ceil($totalRobots / 9); 
     
         return $this->render('robot/shop.html.twig', [
             'robots' => $robots,
             'maxPage' => $maxPage,
-            'page' => $page
+            'page' => $page,
+            'categories' => $categories,
+            'category_id' => $categoryId, // Passer l'ID de la catégorie sélectionnée pour pré-sélectionner le filtre
         ]);
     }
+    
+    
     
 
     #[Route('/{id}', name: 'app_robot_show', methods: ['GET'])]

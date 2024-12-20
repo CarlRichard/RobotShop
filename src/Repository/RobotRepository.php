@@ -29,6 +29,19 @@ class RobotRepository extends ServiceEntityRepository
         return new Paginator($queryBuilder);
     }
 
+
+    public function findByCategory($categoryId)
+    {
+        return $this->createQueryBuilder('r')
+            ->innerJoin('r.category', 'c')
+            ->andWhere('c.id = :categoryId')
+            ->setParameter('categoryId', $categoryId)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
     //    /**
     //     * @return Robot[] Returns an array of Robot objects
     //     */
