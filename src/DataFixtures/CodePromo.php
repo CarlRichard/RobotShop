@@ -30,5 +30,18 @@ class CodePromo extends Fixture
         $manager->persist($discountCode2);
 
         $manager->flush();
+
+        $discountCode3 = new DiscountCode();
+        $discountCode3->setCode('PROMO15')
+            ->setDiscount(15)
+            ->setIsPercentage(true)
+            ->setValidFrom(new \DateTime('2025-01-01'))
+            ->setValidUntil(new \DateTime('2025-12-31'))
+            ->setMinimumOrderAmount(50)
+            ->setIsActive(true);
+
+        $manager->persist($discountCode3);
+
+        $manager->flush();
     }
 }
