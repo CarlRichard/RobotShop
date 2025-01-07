@@ -13,7 +13,10 @@ class Cart
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[ORM\ManyToOne(targetEntity: DiscountCode::class)]
+
     private ?int $id = null;
+    private ?DiscountCode $discountCode = null;
 
     /**
      * @var Collection<int, CartItem>
@@ -58,5 +61,37 @@ class Cart
         }
 
         return $this;
+    }
+
+    public function getDiscountCode(): ?DiscountCode
+    {
+        return $this->discountCode;
+    }
+
+    public function setDiscountCode(?DiscountCode $discountCode): static
+    {
+        $this->discountCode = $discountCode;
+        return $this;
+    }
+
+    public function getTotalWithDiscount(): float
+    {
+        $total = 0;
+
+        foreach ($this->cartItems as $cartItem) {
+            $total += $cartItem->getRobot()->getPrice() * $cartItem->getQuantity();
+        }
+
+        if ($this->discountCode) {
+            $discount = $this->discountCode->isPercentage()
+                ? $total * ($this->discountCode->getDiscount() / 100)
+                : $this->discountCode->getDiscount();
+
+            if ($total >= $this->discountCode->getMinimumOrderAmount()) {
+                $total -= $discount;
+            }
+        }
+
+        return max($total, 0); // Pas de total négatif
     }
 }

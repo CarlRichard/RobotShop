@@ -3,47 +3,77 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Mon Panier</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Robot</th>
-                <th>Prix</th>
-                <th>Quantité</th>
-                <th>Total</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for element in data %}
-                <tr>
-                    <td>{{ element.robot.name }}</td>
-                    <td>{{ element.robot.price }} €</td>
-                    <td>{{ element.quantity }}</td>
-                    <td>{{ element.quantity * element.robot.price }} €</td>
-                    <td>
-                        <a href="{{ path('cart_add', {id: element.robot.id}) }}"><button>+</button></a>
-                        <a href="{{ path('cart_remove', {id: element.robot.id}) }}"><button>-</button></a>
-                        <a href="{{ path('cart_delete', {id: element.robot.id}) }}"><button>Supprimer</button></a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="5">Votre panier est vide</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="3">Total</td>
-                <td>{{ total }} €</td>
-                <td></td>
-            </tr>
-        </tfoot>
-    </table>
-    <div class="btn-back">
-        <a href="{{ path('robot_shop') }}" class="btn">Retour au magasin</a>
-    </div>
-{% endblock %}
+	<h1>Mon Panier</h1>
+	<form action="{{ path('cart_apply_discount') }}" method="post">
+		<input type="text" name="discount_code" placeholder="Entrez votre code promo">
+		<button type="submit">Appliquer</button>
+	</form>
 
+	<table>
+		<thead>
+			<tr>
+				<th>Robot</th>
+				<th>Prix</th>
+				<th>Quantité</th>
+				<th>Total</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for element in data %}
+				<tr>
+					<td>{{ element.robot.name }}</td>
+					<td>{{ element.robot.price }}
+						€</td>
+					<td>{{ element.quantity }}</td>
+					<td>{{ element.quantity * element.robot.price }}
+						€</td>
+					<td>
+						<a href="{{ path('cart_add', {id: element.robot.id}) }}">
+							<button>+</button>
+						</a>
+						<a href="{{ path('cart_remove', {id: element.robot.id}) }}">
+							<button>-</button>
+						</a>
+						<a href="{{ path('cart_delete', {id: element.robot.id}) }}">
+							<button>Supprimer</button>
+						</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">Votre panier est vide</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="3">Total avant réduction</td>
+				<td>{{ total + discountAmount }}
+					€</td>
+			</tr>
+			{% if discount_code %}
+				<tr>
+					<td colspan="3">Réduction ({{ discount_code }})</td>
+					<td>-
+						{{ discountAmount }}
+						€</td>
+				</tr>
+			{% endif %}
+			<tr>
+				<td colspan="3">
+					<strong>Total</strong>
+				</td>
+				<td>
+					<strong>{{ total }}
+						€</strong>
+				</td>
+			</tr>
+
+		</tfoot>
+	</table>
+	<div class="btn-back">
+		<a href="{{ path('robot_shop') }}" class="btn">Retour au magasin</a>
+	</div>
+{% endblock %}
 
